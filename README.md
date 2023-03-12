@@ -1,10 +1,11 @@
 # Escaping-the-Big-Data-Paradigm-with-Compact-Transformers
 
-## Background
+## Overview:
+#### 1. Model Comparsion
 
-## Problem
+#### 2. Problem Statement
 
-## Method
+## Method & Datasets
 
 ## Code Demonstration
 
