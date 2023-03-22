@@ -31,14 +31,43 @@ for a sufficiently rare disease there may only be a few thousand images for posi
 
 ## Method & Datasets
 
+#### Question1: several key components of a transformer model?
+
+ViT is composed of several parts: Image Tokenization, Positional Embedding, Classification Token, the Transformer Encoder, and a Classification Head.
+
+<img width="691" alt="截屏2023-03-19 下午9 52 35" src="https://user-images.githubusercontent.com/82795673/226235772-bc8bea43-c323-450b-a367-f9073116396a.png">
+
+We split an image into fixed-size patches, linearly embed each of them, add position embeddings, and feed the resulting sequence of vectors to a standard Transformer encoder. In order to perform classification, we use the standard approach of adding an extra learnable “classification token” to the sequence.
+
 <img width="784" alt="截屏2023-03-17 下午9 45 36" src="https://user-images.githubusercontent.com/82795673/226080043-bcb37ede-540c-4919-ba93-0f387ed46ee9.png">
+
+- ViT-Lite, nearly identical to the original ViT in terms of architecture, but with a more suitable size and path size for small-scale learning
+- CVT, using Sequence Pooling method (SeqPool) to pool the entire sequence of tokens produced by the transformer encoder
+- CCT, generating richer tokens and preserving local information by a convolutional tokenizer which is better at encoding relationships between pathes compares to the original ViT
+
+#### key components
+
+1. Small and Compact Models:
+transformer backbones in each variant:
+
+<img width="370" alt="截屏2023-03-21 下午12 01 03" src="https://user-images.githubusercontent.com/82795673/226685716-7b733580-c637-403f-a8a2-e46cf3171ee9.png">
+
+Tokenizers in each variant:
+
+<img width="402" alt="截屏2023-03-21 下午12 01 35" src="https://user-images.githubusercontent.com/82795673/226685844-46fbf4c1-d643-44c6-8cfe-3cb795443f17.png">
+
+2.SeqPool:
+
+SeqPool is an attention-based method which pools over the output sequence of tokens. Our motivation is that the output sequence contains relevant information across different parts of the input image, therefore preserving this information can imprve performace, 
+
+3.Convolutional Tokenizer
+
 
 
 ## Code Demonstration
 
 ## Comparsion
 
-## Question1:
 
 ## Question2:
 
