@@ -1,4 +1,5 @@
 # Escaping-the-Big-Data-Paradigm-with-Compact-Transformers
+This paper shows that we can lightweight vision transformer models and achieve competitive performance on classification tasks while being trained from scratch on small datasets
 
 ## Overview:
 #### Model Comparsion
@@ -57,28 +58,33 @@ Tokenizers in each variant:
 <img width="402" alt="截屏2023-03-21 下午12 01 35" src="https://user-images.githubusercontent.com/82795673/226685844-46fbf4c1-d643-44c6-8cfe-3cb795443f17.png">
 
 2.SeqPool:
+- an attention-based method which pools over the output sequence of tokens
+- allowing the network to weight the sequential embeddings of the latent space produced by the transformer encoder and correlate data across the input data
+(assign importance weights across the sequence of data, only after they have been processed by the encoder.)
 
-SeqPool is an attention-based method which pools over the output sequence of tokens. Our motivation is that the output sequence contains relevant information across different parts of the input image, therefore preserving this information can imprve performace, 
+We tested servel variations of this pooling method, including learnable and static methods, and found that the learnable pooling performs the best. Static methods have already been explored by ViT as well. But the learnable weighting is more efficient beacuse each embedded patch does not contain the same amount of entropy. It allows the model to apply weights to token with respect to the relevance of their information. Additionlly sequence pooling allows our model to better untilize information across spatially sparse data.
+
+Our motivation is that the output sequence contains relevant information across different parts of the input image, therefore preserving this information can imprve performace, and at no additional parameters compared to the learnable token. Additionlly, the computation desceases slightly due one less token being forward.
 
 3.Convolutional Tokenizer
+In order to introduce an inductive bias into the model, we replace path and embedding in ViT-Lite and CVT with a simple convolutional block
+- consist of a single convolution, ReLU activation, and a max pool
+<img width="378" alt="截屏2023-03-22 下午9 27 44" src="https://user-images.githubusercontent.com/82795673/227084477-b3054bb7-9bee-4473-9a79-ff541b1d1e4e.png">
 
+where the Conv2d operation has d filters, same number as the embedding dimension of the transformer backbone.
+the convolution and max pool operations can be overlapping which could increase performace by injecting inductive biases. THis allow our model to maintain locally spatial information. By using this convolutional block, the models enjoy an added flexibility over models like ViT, by no longer being tied to the input resolution strictly divisible by the pre-set patch size.
 
+We seek to use convolutions to embed the image into a latent representation, because we believe that it will be more efficient and produce richer tokens for the transformer. These blocks can be adjusted in terms of downsampling ratio (kernel size, stride and padding), and are repeatable for even
+further downsampling. Since self-attention has a quadratic time and space complexity with respect to the number of tokens, and number of tokens is equal to the resolution of the input feature map, more downsampling results in fewer tokens which noticeably decreases computation (at the expense of performance). We found that on top of the added performance gains, this choice in tokenization also gives more flexibility toward removing the positional embedding in the model, as it manages to maintain a very good performance.
 
 ## Code Demonstration
-
-## Comparsion
-
 
 ## Question2:
 
 ## Critical Analysis
-
-
-
-
-
-
-
+Strengths: the paper provides a detailed description of the architectures of vision transformers models, also deliver a thorough analysis of the models' performance, by comparing them with existing state-of-the-art methods, and finally demonstrate that they achieve competitive results with significantly fewer parameters.
+Limitations: the paper lacks a detailed explanation of the training procedures, and the evaluation on various benchmarks behind the proposed models, although the authors justify their design choices based on empirical evidence; the paper's experimental evaluation could have been more thorough. Although the authors conduct a comprehensive analysis of the models' performance on various benchmarks, they do not investigate the models' robustness to adversarial attacks or their generalization to unseen data, which are important factors for evaluating the models' real-world applicability.
 
 ## Resource Links:
 https://arxiv.org/abs/2104.05704
+https://www.semanticscholar.org/paper/Learning-Multiple-Layers-of-Features-from-Tiny-Krizhevsky/5d90f06bb70a0a3dced62413346235c02b1aa086
