@@ -1,4 +1,4 @@
-# Escaping-the-Big-Data-Paradigm-with-Compact-Transformers
+# Escaping the Big Data Paradigm with Compact Transformers
 This paper shows that transformers can be lightweights vision models and achieve competitive performance on classification tasks while being trained from scratch on small datasets
 
 ## Overview:
