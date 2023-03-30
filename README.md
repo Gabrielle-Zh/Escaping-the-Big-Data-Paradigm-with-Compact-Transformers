@@ -35,7 +35,7 @@ Convolutional neural networks (CNNs):
 #### Question1: several key components of a transformer model?
 
 <img width="691" alt="截屏2023-03-19 下午9 52 35" src="https://user-images.githubusercontent.com/82795673/226235772-bc8bea43-c323-450b-a367-f9073116396a.png">
-ViT is composed of several parts: Image Tokenization, Positional Embedding, Classification Token, the Transformer Encoder, and a Classification Head.
+ViT is composed of several parts: Image Tokenization, Positional Embedding, Classification Token, a Transformer Encoder, and a Classification Head.
 
 We split an image into fixed-size patches, linearly embed each of them, add position embeddings, and feed the resulting sequence of vectors to a standard Transformer encoder. In order to perform classification, we use the standard approach of adding an extra learnable “classification token” to the sequence.
 
