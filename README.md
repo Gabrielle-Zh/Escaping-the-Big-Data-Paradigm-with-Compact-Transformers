@@ -4,21 +4,24 @@ This paper shows that transformers can be lightweights vision models and achieve
 ## Overview:
 
 #### Problem Statement
-1.  reliance of machine learning  on large sums of data in many domains (e.g. science and medicine) 
-2. large computation. The requisite of large data results in a requisite of large computational resources and this prevents many researchers from being able to provide insight. This not only limits the ability to apply models in different domains, but also limits reproducibility.
+1. reliance of machine learning  on large sums of data in many domains (e.g. science and medicine) 
+2. the requirement for large amounts of data often results in high computational costs
+
 
 #### Model Comparsion
 
 Transformers:
 - originated in natural language processing, but also applied to other fileds like computer vision (Vision Transformer (ViT))
-- lack some of the inductive biases inherent to CNNs
-- "data hungry" paradigm, make training transformers from scratch seem intractable for many types of pressing problems where there are typically serveral orders of magnitude less data.
+- can struggle to generalize well when trained on limited data as they lack the inductive biases inherent to CNNs
+- "data hungry" paradigm, difficult to train transformers from scratch for many pressing problems with limited data
+
 
 Convolutional neural networks (CNNs): 
 - the standard for computer vision, since convolutions are adept at vision based problems due to their invariance to spatial translations as well as having low relational inductive bias
-- translational equivariance and invariance, allowing CNNs to leverage natural image statistics and subsequently allowing models to have higher sampling efficiency
+- translational equivariance and invariance, helping leverage natural image statistics and improving sampling efficiency of models
 
-#### *CNNs: need less training data due to their translational equivariance from scratch*
+
+#### *CNNs: need less training data due to their heir computational and memory efficiency*
 #### *Transformers: capture long-range dependencies*
 
 #### Approach
@@ -26,9 +29,8 @@ Convolutional neural networks (CNNs):
 - Compact Vision Transformer (CVT), pools over output tokens and improves performance
 - Compact Convolutional Transformer (CCT), increase performace and provide flexibility for input image size while also demonstrating that these variants don npt depend as much on Positional Embedding compared to the rest
 
-[ Thus our focus is on an accessible model, with few parameters, that can quickly and efficiently be trained on smaller platforms while still maintaining SOTA results]
 
-## Method & Datasets
+## Method
 
 #### Question1: several key components of a transformer model?
 
@@ -39,15 +41,17 @@ We split an image into fixed-size patches, linearly embed each of them, add posi
 
 <img width="784" alt="截屏2023-03-17 下午9 45 36" src="https://user-images.githubusercontent.com/82795673/226080043-bcb37ede-540c-4919-ba93-0f387ed46ee9.png">
 
-- ViT-Lite, with a more suitable size and path size for small-scale learning
+- ViT-Lite, identical to original ViT in terms of architecture, with a more suitable path size for small-scale learning
 - CVT, using Sequence Pooling method (SeqPool) to pool the entire sequence of tokens produced by the transformer encoder
-- CCT, generating richer tokens and preserving local information by a convolutional tokenizer which is better at encoding relationships between pathes compares to the original ViT
+- CCT, generating richer tokens and preserving local information by a convolutional tokenizer which is better at encoding relationships between patches
+
+#### Question2: two significant changes in the vision models?
 
 #### key components
 
 1.SeqPool:
 - an attention-based method which pools over the output sequence of tokens
-- weigh the sequential embeddingsof the latent space produced by the transformerencoder and correlate data across the input data
+- weighs sequential embeddings produced by a transformer encoder and correlates input data by assigning importance weights across the sequence after encoder processing
 
 ```python
 class TransformerClassifier(nn.Module):
@@ -67,7 +71,9 @@ class TransformerClassifier(nn.Module):
 ```
 
 2.Convolutional Tokenizer
-a convolutional block consists of a single convolution, ReLU activation, and a max pool
+
+*a convolutional block consists of a single convolution, ReLU activation, and a max pool*
+
 <img width="378" alt="截屏2023-03-22 下午9 27 44" src="https://user-images.githubusercontent.com/82795673/227084477-b3054bb7-9bee-4473-9a79-ff541b1d1e4e.png">
 
 - where the Conv2d operation has d filters, same number as the embedding dimension of the transformer backbone
@@ -108,12 +114,10 @@ class Tokenizer(nn.Module):
         return self.flattener(self.conv_layers(x)).transpose(-2, -1)
 ```
 
-## Question2:
-
 ## Critical Analysis
-1.Strengths: the paper provides a detailed description of the architectures of vision transformers models, also deliver a thorough analysis of the models' performance, by comparing them with existing state-of-the-art methods, and finally demonstrate that they achieve competitive results with significantly fewer parameters.
+1.Strengths: the paper provides a detailed description of the architectures of vision transformer models (ViT-Lite, CVT,CCT)
 
-2.Limitations: the paper lacks a detailed explanation of the training procedures, and the evaluation on various benchmarks behind the proposed models, although the authors justify their design choices based on empirical evidence; the paper's experimental evaluation could have been more thorough. Although the authors conduct a comprehensive analysis of the models' performance on various benchmarks, they do not investigate the models' robustness to adversarial attacks or their generalization to unseen data, which are important factors for evaluating the models' real-world applicability.
+2.Limitations: the paper lacks detailed explanation on training procedures and evaluation on various benchmarks, despite justification of design choices based on empirical evidence; Additionally, the authors did not investigate the models' robustness to adversarial attacks or generalization to unseen data, which are important factors for real-world applicability
 
 ## Resource Links:
 https://arxiv.org/abs/2104.05704
