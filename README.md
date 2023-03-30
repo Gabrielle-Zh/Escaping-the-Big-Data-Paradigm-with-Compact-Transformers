@@ -41,7 +41,7 @@ We split an image into fixed-size patches, linearly embed each of them, add posi
 
 <img width="784" alt="截屏2023-03-17 下午9 45 36" src="https://user-images.githubusercontent.com/82795673/226080043-bcb37ede-540c-4919-ba93-0f387ed46ee9.png">
 
-- ViT-Lite, identical to original ViT in terms of architecture, with a more suitable path size for small-scale learning
+- ViT-Lite, identical to original ViT in terms of architecture, with a more suitable patch size for small-scale learning
 - CVT, using Sequence Pooling method (SeqPool) to pool the entire sequence of tokens produced by the transformer encoder
 - CCT, generating richer tokens and preserving local information by a convolutional tokenizer which is better at encoding relationships between patches
 
