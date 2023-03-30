@@ -1,7 +1,7 @@
-# Escaping the Big Data Paradigm with Compact Transformers
+## Escaping the Big Data Paradigm with Compact Transformers
 This paper shows that transformers can be lightweights vision models and achieve competitive performance on classification tasks while being trained from scratch on small datasets
 
-## Overview:
+### Overview:
 
 #### Problem Statement
 1. reliance of machine learning  on large sums of data in many domains (e.g. science and medicine) 
@@ -30,7 +30,7 @@ Convolutional neural networks (CNNs):
 - Compact Convolutional Transformer (CCT), increase performace and provide flexibility for input image size while also demonstrating that these variants don npt depend as much on Positional Embedding compared to the rest
 
 
-## Method
+### Method
 
 #### Question1: several key components of a transformer model?
 
@@ -114,11 +114,11 @@ class Tokenizer(nn.Module):
         return self.flattener(self.conv_layers(x)).transpose(-2, -1)
 ```
 
-## Critical Analysis
+### Critical Analysis
 1.Strengths: the paper provides a detailed description of the architectures of vision transformer models (ViT-Lite, CVT,CCT)
 
 2.Limitations: the paper lacks detailed explanation on training procedures and evaluation on various benchmarks, despite justification of design choices based on empirical evidence; Additionally, the authors did not investigate the models' robustness to adversarial attacks or generalization to unseen data, which are important factors for real-world applicability
 
-## Resource Links:
+### Resource Links:
 https://arxiv.org/abs/2104.05704
 https://www.semanticscholar.org/paper/Learning-Multiple-Layers-of-Features-from-Tiny-Krizhevsky/5d90f06bb70a0a3dced62413346235c02b1aa086
